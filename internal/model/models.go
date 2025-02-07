@@ -18,9 +18,10 @@ type NutritionPlan struct {
 }
 
 type Dish struct {
-	Name     string  `json:"name"`
-	Calories int     `json:"calories"`
-	Proteins float32 `json:"proteins"`
-	Carbs    float32 `json:"carbs"`
-	Fats     float32 `json:"fats"`
+	Name        string  `json:"name"`
+	Description string  `json:"description"`
+	Calories    int     `json:"calories"`
+	Proteins    float32 `json:"proteins"`
+	Carbs       float32 `json:"carbs"`
+	Fats        float32 `json:"fats"`
 }

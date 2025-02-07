@@ -1,4 +1,16 @@
+WITH target_dishes AS (
+    SELECT *
+    FROM dishes
+    ORDER BY
+        CASE
+            WHEN $1 = 'gain' THEN calories
+            WHEN $1 = 'lose' THEN -calories
+            ELSE NULL
+        END DESC NULLS LAST,
+    RANDOM()
+    LIMIT 20
+    )
 SELECT *
-FROM dishes
-WHERE calories <= $1 AND proteins <= $2 AND fats <= $3 AND carbohydrates <= $4
-ORDER BY RANDOM() LIMIT 5;
+FROM target_dishes
+ORDER BY RANDOM()
+LIMIT 5;

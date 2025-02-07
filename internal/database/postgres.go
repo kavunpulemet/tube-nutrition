@@ -7,7 +7,7 @@ import (
 )
 
 type NutritionRepository interface {
-	GetDishes(ctx utils.MyContext, totalCalories int, proteins, fats, carbohydrates float32) ([]Dish, error)
+	GetDishes(ctx utils.MyContext, goal string) ([]Dish, error)
 }
 
 type NutritionPostgres struct {
@@ -21,10 +21,10 @@ func NewNutritionPostgres(db *sqlx.DB) *NutritionPostgres {
 //go:embed sql/GetDishes.sql
 var getDishes string
 
-func (p *NutritionPostgres) GetDishes(ctx utils.MyContext, totalCalories int, proteins, fats, carbohydrates float32) ([]Dish, error) {
+func (p *NutritionPostgres) GetDishes(ctx utils.MyContext, goal string) ([]Dish, error) {
 	var dishes []Dish
 
-	err := p.db.SelectContext(ctx.Ctx, &dishes, getDishes, totalCalories, proteins, fats, carbohydrates)
+	err := p.db.SelectContext(ctx.Ctx, &dishes, getDishes, goal)
 	if err != nil {
 		return nil, err
 	}

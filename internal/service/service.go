@@ -35,7 +35,7 @@ func (s *ImplNutritionService) NutritionPlan(ctx utils.MyContext, accessToken st
 
 	totalCalories, proteins, fats, carbohydrates := calculateDailyNeeds(profile)
 
-	dbDishes, err := s.repo.GetDishes(ctx, totalCalories, proteins, fats, carbohydrates)
+	dbDishes, err := s.repo.GetDishes(ctx, profile.Goal)
 	if err != nil {
 		return model.NutritionPlan{}, fmt.Errorf("failed to fetch dishes: %w", err)
 	}
@@ -86,7 +86,7 @@ func FetchUserProfile(accessToken string) (model.Profile, error) {
 func calculateDailyNeeds(profile model.Profile) (int, float32, float32, float32) {
 	var bmr float32
 
-	if profile.Gender == "м" {
+	if profile.Gender == "m" {
 		bmr = 88.36 + (13.4 * profile.Weight) + (4.8 * profile.Height) - (5.7 * float32(profile.Age))
 	} else {
 		bmr = 447.6 + (9.2 * profile.Weight) + (3.1 * profile.Height) - (4.3 * float32(profile.Age))
@@ -94,9 +94,9 @@ func calculateDailyNeeds(profile model.Profile) (int, float32, float32, float32)
 
 	var multiplier float32
 	switch profile.Goal {
-	case "набор":
+	case "gain":
 		multiplier = 1.2
-	case "похудение":
+	case "lose":
 		multiplier = 0.8
 	default:
 		multiplier = 1.0

@@ -10,11 +10,12 @@ func FromDBDishes(dbDishes []database.Dish) []model.Dish {
 
 	for i, dbDish := range dbDishes {
 		serviceDishes[i] = model.Dish{
-			Name:     dbDish.Name,
-			Calories: dbDish.Calories,
-			Proteins: dbDish.Proteins,
-			Carbs:    dbDish.Carbs,
-			Fats:     dbDish.Fats,
+			Name:        dbDish.Name,
+			Description: dbDish.Description,
+			Calories:    dbDish.Calories,
+			Proteins:    dbDish.Proteins,
+			Carbs:       dbDish.Carbs,
+			Fats:        dbDish.Fats,
 		}
 	}
 
